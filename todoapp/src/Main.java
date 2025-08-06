@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -20,7 +21,14 @@ public class Main {
         @Override
         public User logIn(String username, String password)
         {
-            return users.get(0);
+            for (var user : users)
+            {
+                if ((Objects.equals(user.getUsername(), username) && (Objects.equals(user.getPassword(), password)))){
+                    return user;
+                }
+            }
+
+            return users.getFirst();
         }
     };
 
