@@ -27,6 +27,7 @@ public class Main {
                 }
             }
 
+            System.out.println("user not found -> setting to default user.");
             return users.getFirst();
         }
     };
@@ -38,7 +39,7 @@ public class Main {
      * @param args The command-line arguments.
      */
     public static void main(String[] args) {
-        users.add(new User("test", "test"));
+        users.add(new User("default user", "test"));
         while (isRunning) {
             showMenu();
         }
