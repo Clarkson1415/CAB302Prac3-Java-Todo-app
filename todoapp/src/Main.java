@@ -3,20 +3,27 @@ import java.util.Scanner;
 
 public class Main {
     // Static list of users, acting as a database
-    private static ArrayList<User> users = new ArrayList<>();
+    private static final ArrayList<User> users = new ArrayList<>();
 
     // Mock authentication service that always returns the first user when log in, and does nothing when sign up
-    private static IAuthenticationService authService = new IAuthenticationService() {
+    private static final IAuthenticationService authService = new AuthenticationService(users) {
         @Override
-        public User signUp(String username, String password) {
-            return null;
+        public User signUp(String username, String password)
+        {
+            onSignUp();
+            System.out.println("User " + username + " signed up:");
+            var newUser = new User(username, password);
+            users.add(newUser);
+            return newUser;
         }
 
         @Override
-        public User logIn(String username, String password) {
+        public User logIn(String username, String password)
+        {
             return users.get(0);
         }
     };
+
     private static boolean isRunning = true;
 
     /**
@@ -78,6 +85,8 @@ public class Main {
         User user = authService.logIn(username, password);
         System.out.println("Welcome, " + user.getUsername() + "!");
         // TODO Later: Add the to-do list operations
+        var todos = new ToDoList(user);
+        todos.run();
     }
 
     /**
@@ -91,6 +100,8 @@ public class Main {
         String password = scanner.nextLine();
         User user = authService.signUp(username, password);
         // TODO Later: Shows a message based on the result
+        var statusString = "Success";
+        System.out.println("Sign up: " + statusString);
     }
 
     /**
