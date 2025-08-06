@@ -11,7 +11,6 @@ public class Main {
         @Override
         public User signUp(String username, String password)
         {
-            onSignUp();
             System.out.println("User " + username + " signed up:");
             var newUser = new User(username, password);
             users.add(newUser);
